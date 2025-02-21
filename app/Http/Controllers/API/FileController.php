@@ -56,9 +56,14 @@ class FileController extends Controller
     public function destroy($filename)
     {
         $filePath = 'uploads/' . $filename;
+        $previewPath = 'previews/' . pathinfo($filename, PATHINFO_FILENAME) . '.png';
 
         if (Storage::exists($filePath)) {
             Storage::delete($filePath);
+        }
+
+        if (Storage::exists($previewPath)) {
+            Storage::delete($previewPath);
         }
 
         return response()->json(['message' => 'Файл удален']);
